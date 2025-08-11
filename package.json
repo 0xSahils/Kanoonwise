@@ -8,12 +8,12 @@
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && npm install --production=false",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:backend": "cd backend && npm install",
     "start": "cd backend && npm start",
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "heroku-postbuild": "npm run build",
-    "render-build": "npm install && cd backend && npm install && cd ../frontend && npm install && npx vite build && cd .. && npm run build:backend"
+    "render-build": "npm install && npm run build:frontend && npm run build:backend"
   },
   "keywords": [
     "legal",
