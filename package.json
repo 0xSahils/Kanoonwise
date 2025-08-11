@@ -13,7 +13,7 @@
     "start": "cd backend && npm start",
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "heroku-postbuild": "npm run build",
-    "render-build": "npm install && cd backend && npm install && cd ../frontend && npm install && npm run build && cd .. && npm run build:backend"
+    "render-build": "npm install && cd backend && npm install && cd ../frontend && npm install && npx vite build && cd .. && npm run build:backend"
   },
   "keywords": [
     "legal",
