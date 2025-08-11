@@ -1,104 +1,126 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import toast from 'react-hot-toast'
-import { Button } from '../../components/ui/button'
-import { Input } from '../../components/ui/input'
-import { Label } from '../../components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
-import { requestOtp, verifyOtp, clearError } from '../../store/slices/authSlice'
-import { Loader2, Mail, Shield } from 'lucide-react'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import toast from "react-hot-toast";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import {
+  requestOtp,
+  verifyOtp,
+  clearError,
+} from "../../store/slices/authSlice";
+import { Loader2, Mail, Shield } from "lucide-react";
 
 const emailSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  role: z.enum(['lawyer', 'client'], { required_error: 'Please select your role' })
-})
+  email: z.string().email("Please enter a valid email address"),
+  role: z.enum(["lawyer", "client"], {
+    required_error: "Please select your role",
+  }),
+});
 
 const otpSchema = z.object({
-  otp: z.string().min(6, 'OTP must be 6 digits').max(6, 'OTP must be 6 digits'),
-})
+  otp: z.string().min(6, "OTP must be 6 digits").max(6, "OTP must be 6 digits"),
+});
 
 const Login = () => {
-  const [step, setStep] = useState('email') // 'email' or 'otp'
-  const [email, setEmail] = useState('')
-  const [selectedRole, setSelectedRole] = useState('')
-  
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
-  
-  const { isLoading, error, otpSent, isAuthenticated, user } = useSelector((state) => state.auth)
+  const [step, setStep] = useState("email"); // 'email' or 'otp'
+  const [email, setEmail] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { isLoading, error, otpSent, isAuthenticated, user } = useSelector(
+    (state) => state.auth
+  );
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const emailForm = useForm({
     resolver: zodResolver(emailSchema),
-    defaultValues: { email: '', role: 'lawyer' }
-  })
+    defaultValues: { email: "", role: "lawyer" },
+  });
 
   const otpForm = useForm({
     resolver: zodResolver(otpSchema),
-    defaultValues: { otp: '' }
-  })
+    defaultValues: { otp: "" },
+  });
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      const from = location.state?.from?.pathname || 
-                   (user.role === 'lawyer' ? '/lawyer/dashboard' : '/client/dashboard')
-      navigate(from, { replace: true })
+      const from =
+        location.state?.from?.pathname ||
+        (user.role === "lawyer" ? "/lawyer/dashboard" : "/client/dashboard");
+      navigate(from, { replace: true });
     }
-  }, [isAuthenticated, user, navigate, location])
+  }, [isAuthenticated, user, navigate, location]);
 
   useEffect(() => {
     if (otpSent) {
-      setStep('otp')
-      toast.success('OTP sent to your email')
+      setStep("otp");
+      toast.success("OTP sent to your email");
     }
-  }, [otpSent])
+  }, [otpSent]);
 
   useEffect(() => {
     if (error) {
-      toast.error(error)
-      dispatch(clearError())
+      toast.error(error);
+      dispatch(clearError());
     }
-  }, [error, dispatch])
+  }, [error, dispatch]);
 
   const handleEmailSubmit = async (data) => {
     try {
-      await dispatch(requestOtp({ email: data.email, role: data.role })).unwrap()
-      setEmail(data.email)
-      setSelectedRole(data.role)
+      await dispatch(
+        requestOtp({ email: data.email, role: data.role })
+      ).unwrap();
+      setEmail(data.email);
+      setSelectedRole(data.role);
     } catch {
       // Error handled by useEffect
     }
-  }
+  };
 
   const handleOtpSubmit = async (data) => {
     try {
-      await dispatch(verifyOtp({ email, otp: data.otp })).unwrap()
-      toast.success('Login successful!')
+      await dispatch(verifyOtp({ email, otp: data.otp })).unwrap();
+      toast.success("Login successful!");
     } catch {
       // Error handled by useEffect
     }
-  }
+  };
 
   const handleResendOtp = async () => {
     try {
-      await dispatch(requestOtp({ email, role: selectedRole })).unwrap()
-      toast.success('OTP resent!')
+      await dispatch(requestOtp({ email, role: selectedRole })).unwrap();
+      toast.success("OTP resent!");
     } catch {
       // Error handled by useEffect
     }
-  }
+  };
 
   const handleBackToEmail = () => {
-    setStep('email')
-    setEmail('')
-    setSelectedRole('')
-    emailForm.reset()
-    otpForm.reset()
-  }
+    setStep("email");
+    setEmail("");
+    setSelectedRole("");
+    emailForm.reset();
+    otpForm.reset();
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
@@ -106,7 +128,7 @@ const Login = () => {
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
             <div className="bg-primary/10 p-3 rounded-full">
-              {step === 'email' ? (
+              {step === "email" ? (
                 <Mail className="h-6 w-6 text-primary" />
               ) : (
                 <Shield className="h-6 w-6 text-primary" />
@@ -114,24 +136,26 @@ const Login = () => {
             </div>
           </div>
           <CardTitle className="text-2xl text-center">
-            {step === 'email' ? 'Welcome to KanoonWise' : 'Enter OTP'}
+            {step === "email" ? "Welcome to KanoonWise" : "Enter OTP"}
           </CardTitle>
           <CardDescription className="text-center">
-            {step === 'email' 
-              ? 'Enter your email to receive an OTP'
-              : `Enter the 6-digit code sent to ${email}`
-            }
+            {step === "email"
+              ? "Enter your email to receive an OTP"
+              : `Enter the 6-digit code sent to ${email}`}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {step === 'email' ? (
-            <form onSubmit={emailForm.handleSubmit(handleEmailSubmit)} className="space-y-4">
+          {step === "email" ? (
+            <form
+              onSubmit={emailForm.handleSubmit(handleEmailSubmit)}
+              className="space-y-4"
+            >
               <div className="space-y-2">
                 <Label htmlFor="role">I am a</Label>
                 <select
                   id="role"
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  {...emailForm.register('role')}
+                  {...emailForm.register("role")}
                 >
                   <option value="lawyer">Lawyer</option>
                   <option value="client">Client</option>
@@ -148,7 +172,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   placeholder="Enter your email"
-                  {...emailForm.register('email')}
+                  {...emailForm.register("email")}
                 />
                 {emailForm.formState.errors.email && (
                   <p className="text-sm text-destructive">
@@ -156,23 +180,22 @@ const Login = () => {
                   </p>
                 )}
               </div>
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading}
-              >
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Sending OTP...
                   </>
                 ) : (
-                  'Send OTP'
+                  "Send OTP"
                 )}
               </Button>
             </form>
           ) : (
-            <form onSubmit={otpForm.handleSubmit(handleOtpSubmit)} className="space-y-4">
+            <form
+              onSubmit={otpForm.handleSubmit(handleOtpSubmit)}
+              className="space-y-4"
+            >
               <div className="space-y-2">
                 <Label htmlFor="otp">6-Digit OTP</Label>
                 <Input
@@ -180,7 +203,7 @@ const Login = () => {
                   type="text"
                   placeholder="000000"
                   maxLength={6}
-                  {...otpForm.register('otp')}
+                  {...otpForm.register("otp")}
                 />
                 {otpForm.formState.errors.otp && (
                   <p className="text-sm text-destructive">
@@ -188,19 +211,15 @@ const Login = () => {
                   </p>
                 )}
               </div>
-              
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading}
-              >
+
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Verifying...
                   </>
                 ) : (
-                  'Verify OTP'
+                  "Verify OTP"
                 )}
               </Button>
 
@@ -226,7 +245,7 @@ const Login = () => {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

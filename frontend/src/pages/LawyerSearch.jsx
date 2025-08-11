@@ -18,6 +18,11 @@ const LawyerSearch = () => {
     searchParams.get("city") || ""
   );
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Debounced search effect
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -47,10 +52,18 @@ const LawyerSearch = () => {
           import.meta.env.VITE_API_URL
         }/public/lawyers/search?${params.toString()}`;
 
+        console.log("🔍 LawyerSearch - API URL:", apiUrl);
+        console.log("🔍 LawyerSearch - Filters:", filters);
+
         const response = await fetch(apiUrl);
 
         if (response.ok) {
           const data = await response.json();
+          console.log("✅ LawyerSearch - API Response:", data);
+          console.log(
+            "✅ LawyerSearch - Found lawyers:",
+            data.lawyers?.length || 0
+          );
 
           // Transform backend data to frontend format
           const transformedLawyers = data.lawyers.map((lawyer) => ({
@@ -115,13 +128,8 @@ const LawyerSearch = () => {
   };
 
   const handleBookConsultation = (lawyer) => {
-    // Redirect to login page for booking
-    navigate("/login", {
-      state: {
-        redirectTo: `/book-consultation/${lawyer.id}`,
-        lawyerName: lawyer.name,
-      },
-    });
+    // Use quick booking flow for seamless experience
+    navigate(`/quick-book/${lawyer.id}`);
   };
 
   if (loading) {
@@ -139,41 +147,64 @@ const LawyerSearch = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Main Content */}
-      <div className="pt-20">
-        {" "}
-        {/* Add top padding to prevent header overlap */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          {/* Search Header */}
-          <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-              Find Lawyers {filters.city && `in ${filters.city}`}
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="absolute inset-0 opacity-10">
+          <img
+            src="/hero.jpg"
+            alt="Legal background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-block w-16 h-1 bg-yellow-500 mb-6"></div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-6">
+              Find Your Perfect{" "}
+              <span className="text-yellow-500">Legal Expert</span>
             </h1>
-            <p className="text-sm sm:text-base text-gray-600">
-              {lawyers.length} lawyers found
+            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+              {filters.city
+                ? `${lawyers.length} verified lawyers found in ${filters.city}`
+                : `${lawyers.length} verified lawyers ready to help you`}
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Filters */}
-          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Main Content */}
+      <div className="bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Enhanced Filters */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 sm:p-8 mb-8">
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                Refine Your Search
+              </h2>
+              <p className="text-gray-600">
+                Find the perfect lawyer for your specific needs
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <i className="fas fa-map-marker-alt text-yellow-500 mr-2"></i>
                   City
                 </label>
                 <input
                   type="text"
                   value={searchInput}
                   onChange={(e) => handleFilterChange("city", e.target.value)}
-                  placeholder="Enter city"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm sm:text-base"
+                  placeholder="Enter city name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <i className="fas fa-balance-scale text-yellow-500 mr-2"></i>
                   Specialization
                 </label>
                 <select
@@ -181,22 +212,24 @@ const LawyerSearch = () => {
                   onChange={(e) =>
                     handleFilterChange("specialization", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm sm:text-base"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all text-sm sm:text-base"
                 >
                   <option value="">All Specializations</option>
                   <option value="Criminal Law">Criminal Law</option>
                   <option value="Family Law">Family Law</option>
                   <option value="Corporate Law">Corporate Law</option>
-                  <option value="Property Law">Property Law</option>
+                  <option value="Banking Law">Banking Law</option>
+                  <option value="Real Estate Law">Real Estate Law</option>
+                  <option value="Health Law">Health Law</option>
                   <option value="Civil Law">Civil Law</option>
                   <option value="IT Law">IT Law</option>
                   <option value="Tax Law">Tax Law</option>
                   <option value="Employment Law">Employment Law</option>
-                  <option value="Constitutional Law">Constitutional Law</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <i className="fas fa-graduation-cap text-yellow-500 mr-2"></i>
                   Experience
                 </label>
                 <select
@@ -204,157 +237,226 @@ const LawyerSearch = () => {
                   onChange={(e) =>
                     handleFilterChange("experience", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm sm:text-base"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all text-sm sm:text-base"
                 >
                   <option value="">Any Experience</option>
+                  <option value="1">1+ Years</option>
+                  <option value="3">3+ Years</option>
                   <option value="5">5+ Years</option>
                   <option value="10">10+ Years</option>
                   <option value="15">15+ Years</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sort By
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <i className="fas fa-sort text-yellow-500 mr-2"></i>Sort By
                 </label>
                 <select
                   value={filters.sortBy}
                   onChange={(e) => handleFilterChange("sortBy", e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm sm:text-base"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all text-sm sm:text-base"
                 >
-                  <option value="rating">Rating</option>
-                  <option value="experience">Experience</option>
-                  <option value="fee">Fee (Low to High)</option>
+                  <option value="rating">Highest Rating</option>
+                  <option value="experience">Most Experience</option>
+                  <option value="fee">Lowest Fee</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Results */}
-          {lawyers.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-gray-500 text-base sm:text-lg">
-                No lawyers found matching your criteria.
+          {/* Results Section */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900">
+                <i className="fas fa-users text-yellow-500 mr-3"></i>
+                Available Lawyers
+              </h2>
+              <div className="text-gray-600">
+                Showing {lawyers.length} lawyers
               </div>
-              <p className="text-gray-400 mt-2 text-sm sm:text-base">
-                Try adjusting your search filters.
+            </div>
+          </div>
+
+          {lawyers.length === 0 ? (
+            <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i className="fas fa-search text-3xl text-gray-400"></i>
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                No Lawyers Found
+              </h3>
+              <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                We couldn't find any lawyers matching your current criteria. Try
+                adjusting your search filters.
               </p>
+              <button
+                onClick={() =>
+                  setFilters({
+                    city: "",
+                    specialization: "",
+                    experience: "",
+                    sortBy: "rating",
+                  })
+                }
+                className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-8 py-3 rounded-xl transition-all"
+              >
+                Reset Filters
+              </button>
             </div>
           ) : (
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-6">
               {lawyers.map((lawyer) => (
                 <div
                   key={lawyer.id}
-                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow"
+                  className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  <div className="flex flex-col lg:flex-row gap-6">
                     {/* Lawyer Image */}
-                    <div className="flex-shrink-0 self-center sm:self-start">
-                      <img
-                        src={lawyer.image}
-                        alt={lawyer.name}
-                        className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover"
-                      />
+                    <div className="flex-shrink-0 self-center lg:self-start">
+                      <div className="relative">
+                        <img
+                          src={lawyer.image}
+                          alt={lawyer.name}
+                          className="w-32 h-32 rounded-2xl object-cover shadow-lg"
+                        />
+                        {lawyer.verified && (
+                          <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                            <i className="fas fa-check text-white text-sm"></i>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     {/* Lawyer Info */}
                     <div className="flex-grow">
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
-                        <div className="mb-3 sm:mb-0">
-                          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">
+                      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-6">
+                        <div className="mb-4 lg:mb-0">
+                          <h3 className="text-2xl font-bold text-gray-900 mb-2">
                             {lawyer.name}
                             {lawyer.verified && (
-                              <span className="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <i className="fas fa-check-circle mr-1"></i>
-                                Verified
+                              <span className="ml-3 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                                <i className="fas fa-shield-check mr-1"></i>
+                                Verified Expert
                               </span>
                             )}
                           </h3>
-                          <div className="flex items-center mb-2">
+                          <div className="flex items-center mb-3">
                             <div className="flex items-center">
                               {[...Array(5)].map((_, i) => (
                                 <i
                                   key={i}
-                                  className={`fas fa-star text-sm ${
+                                  className={`fas fa-star text-lg ${
                                     i < Math.floor(lawyer.rating)
-                                      ? "text-yellow-400"
+                                      ? "text-yellow-500"
                                       : "text-gray-300"
                                   }`}
                                 ></i>
                               ))}
-                              <span className="ml-2 text-sm text-gray-600">
-                                {lawyer.rating.toFixed(1)} ({lawyer.reviews}{" "}
-                                reviews)
+                              <span className="ml-3 text-lg font-semibold text-gray-700">
+                                {lawyer.rating.toFixed(1)}
+                              </span>
+                              <span className="ml-2 text-gray-600">
+                                ({lawyer.reviews} reviews)
                               </span>
                             </div>
                           </div>
+                          <p className="text-gray-600 leading-relaxed">
+                            {lawyer.description}
+                          </p>
                         </div>
-                        <div className="text-center sm:text-right">
-                          <div className="text-xl sm:text-2xl font-bold text-primary-600">
-                            ₹{lawyer.consultationFee.toLocaleString()}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            Consultation Fee
+                        <div className="text-center lg:text-right">
+                          <div className="bg-yellow-50 rounded-xl p-4 border border-yellow-200">
+                            <div className="text-3xl font-bold text-gray-900">
+                              ₹{lawyer.consultationFee.toLocaleString()}
+                            </div>
+                            <div className="text-sm text-gray-600 mt-1">
+                              Consultation Fee
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
-                        <div>
-                          <div className="text-sm text-gray-500 mb-1">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <div className="bg-gray-50 rounded-xl p-4">
+                          <div className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <i className="fas fa-balance-scale text-yellow-500 mr-2"></i>
                             Specialization
                           </div>
-                          <div className="flex flex-wrap gap-1">
+                          <div className="flex flex-wrap gap-2">
                             {lawyer.specialization.map((spec, index) => (
                               <span
                                 key={index}
-                                className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border border-yellow-200"
                               >
                                 {spec}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <div>
-                          <div className="text-sm text-gray-500 mb-1">
-                            Experience
+                        <div className="bg-gray-50 rounded-xl p-4">
+                          <div className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <i className="fas fa-graduation-cap text-yellow-500 mr-2"></i>
+                            Experience & Location
                           </div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {lawyer.experience} years
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-sm text-gray-500 mb-1">
-                            Location
-                          </div>
-                          <div className="text-sm font-medium text-gray-900">
-                            <i className="fas fa-map-marker-alt mr-1"></i>
-                            {lawyer.city}
+                          <div className="space-y-2">
+                            <div className="text-lg font-semibold text-gray-900">
+                              {lawyer.experience} years experience
+                            </div>
+                            <div className="text-gray-700 flex items-center">
+                              <i className="fas fa-map-marker-alt text-yellow-500 mr-2"></i>
+                              {lawyer.city}
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <div className="text-sm text-gray-500 mb-1">
-                            Languages
+                        <div className="bg-gray-50 rounded-xl p-4">
+                          <div className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <i className="fas fa-language text-yellow-500 mr-2"></i>
+                            Languages & Courts
                           </div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {lawyer.languages.join(", ")}
+                          <div className="space-y-2">
+                            <div className="flex flex-wrap gap-1">
+                              {lawyer.languages?.map((lang, index) => (
+                                <span
+                                  key={index}
+                                  className="text-sm bg-white px-2 py-1 rounded-md border"
+                                >
+                                  {lang}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              {lawyer.courtPractice?.slice(0, 2).join(", ")}
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      <p className="text-gray-600 text-sm mb-4">
-                        {lawyer.description}
-                      </p>
-
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <button
-                          onClick={() => handleBookConsultation(lawyer)}
-                          className="flex-1 bg-primary-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-primary-700 transition-colors font-medium text-sm sm:text-base"
-                        >
-                          Book Consultation
-                        </button>
-                        <button className="flex-1 border border-gray-300 text-gray-700 px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-gray-50 transition-colors font-medium text-sm sm:text-base">
-                          View Profile
-                        </button>
+                      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between pt-6 border-t border-gray-100">
+                        <div className="flex items-center space-x-4">
+                          <div className="flex items-center text-gray-600">
+                            <i className="fas fa-clock text-yellow-500 mr-2"></i>
+                            <span className="text-sm">
+                              Usually responds in 1-2 hours
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex space-x-3">
+                          <button
+                            onClick={() =>
+                              navigate(`/client/lawyers/${lawyer.id}`)
+                            }
+                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-xl transition-all"
+                          >
+                            View Profile
+                          </button>
+                          <button
+                            onClick={() => handleBookConsultation(lawyer)}
+                            className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-8 py-3 rounded-xl transition-all transform hover:scale-105 shadow-lg"
+                          >
+                            <i className="fas fa-calendar-check mr-2"></i>
+                            Book Consultation
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

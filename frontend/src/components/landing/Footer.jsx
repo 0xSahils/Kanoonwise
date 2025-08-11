@@ -144,15 +144,19 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-3 mb-6">
               <div className="flex items-center space-x-3">
-                <i className="fas fa-phone text-primary-500 w-5"></i>
-                <span className="text-gray-300">+91 7985179107</span>
+                <i className="fas fa-phone text-yellow-500 w-5"></i>
+                <span className="text-gray-300 hover:text-yellow-400 transition-colors">
+                  +91 7985179107
+                </span>
               </div>
               <div className="flex items-center space-x-3">
-                <i className="fas fa-envelope text-primary-500 w-5"></i>
-                <span className="text-gray-300">info@Kanoonwise.com</span>
+                <i className="fas fa-envelope text-yellow-500 w-5"></i>
+                <span className="text-gray-300 hover:text-yellow-400 transition-colors">
+                  info@Kanoonwise.com
+                </span>
               </div>
               <div className="flex items-start space-x-3">
-                <i className="fas fa-map-marker-alt text-primary-500 w-5 mt-1"></i>
+                <i className="fas fa-map-marker-alt text-yellow-500 w-5 mt-1"></i>
                 <span className="text-gray-300">
                   123 Legal Street, Business District,
                   <br />
@@ -199,14 +203,14 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="mt-16 pt-8 border-t border-gray-800">
-          <div className="bg-gradient-to-r from-primary-600 to-accent-600 rounded-2xl p-8 lg:p-12">
+        <div className="mt-16 pt-8 border-t border-gray-700">
+          <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-2xl p-8 lg:p-12 shadow-2xl">
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               <div>
-                <h3 className="text-2xl lg:text-3xl font-bold mb-4">
+                <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-gray-900">
                   Stay Updated with Legal Insights
                 </h3>
-                <p className="text-primary-100 text-lg">
+                <p className="text-gray-800 text-lg">
                   Get the latest legal news, tips, and updates delivered to your
                   inbox.
                 </p>
@@ -217,17 +221,18 @@ const Footer = () => {
                     <input
                       type="email"
                       placeholder="Enter your email address"
-                      className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent shadow-lg"
                     />
                   </div>
                   <button
                     onClick={handleNewsletterSubscribe}
-                    className="bg-white text-primary-600 hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 whitespace-nowrap"
+                    className="bg-gray-900 text-white hover:bg-gray-800 font-semibold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap"
                   >
+                    <i className="fas fa-envelope mr-2"></i>
                     Subscribe Now
                   </button>
                 </div>
-                <p className="text-primary-100 text-sm mt-3">
+                <p className="text-gray-700 text-sm mt-3">
                   By subscribing, you agree to our Privacy Policy and Terms of
                   Service.
                 </p>

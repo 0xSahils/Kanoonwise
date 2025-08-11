@@ -14,6 +14,7 @@ import AuthProvider from "./components/auth/AuthProvider";
 
 // Landing Page
 import Landing from "./pages/Landing";
+import JusticiaHomepage from "./pages/JusticiaHomepage";
 import LawyerSearch from "./pages/LawyerSearch";
 
 // Auth Pages
@@ -34,6 +35,8 @@ import ClientProfile from "./pages/client/Profile";
 import ClientLawyerProfile from "./pages/client/LawyerProfile";
 import BookAppointment from "./pages/client/BookAppointment";
 import SimpleBooking from "./pages/client/SimpleBooking";
+import QuickBooking from "./pages/QuickBooking";
+import MyAppointments from "./pages/MyAppointments";
 
 function App() {
   return (
@@ -42,7 +45,8 @@ function App() {
         <Router>
           <Routes>
             {/* Landing Page */}
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<JusticiaHomepage />} />
+            <Route path="/old-landing" element={<Landing />} />
 
             {/* Public Routes */}
             <Route path="/search-lawyers" element={<LawyerSearch />} />
@@ -50,6 +54,9 @@ function App() {
               path="/book-consultation/:lawyerId"
               element={<SimpleBooking />}
             />
+            <Route path="/quick-book/:lawyerId" element={<QuickBooking />} />
+            <Route path="/quick-booking" element={<QuickBooking />} />
+            <Route path="/my-appointments" element={<MyAppointments />} />
 
             {/* Auth Routes */}
             <Route

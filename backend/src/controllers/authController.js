@@ -1,16 +1,29 @@
-const authService = require('../services/authService');
-const rateLimit = require('express-rate-limit');
+const authService = require("../services/authService");
+const rateLimit = require("express-rate-limit");
 
+// Environment-based rate limiting
 const otpLimiter = rateLimit({
-	windowMs: 60 * 60 * 1000, // 1 hour
-	max: 5, // Limit each IP to 5 OTP requests per windowMs
-	message: 'Too many OTP requests from this IP, please try again after an hour',
+  windowMs:
+    process.env.NODE_ENV === "production"
+      ? 60 * 60 * 1000 // Production: 1 hour
+      : 15 * 60 * 1000, // Development: 15 minutes
+  max:
+    process.env.NODE_ENV === "production"
+      ? 5 // Production: 5 requests
+      : 20, // Development: 20 requests
+  message: {
+    message:
+      process.env.NODE_ENV === "production"
+        ? "Too many OTP requests from this IP, please try again after an hour"
+        : "Too many OTP requests from this IP, please wait 15 minutes",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
-
 
 const requestOtp = async (req, res, next) => {
   try {
-    const { email, role = 'lawyer' } = req.body;
+    const { email, role = "lawyer" } = req.body;
     const result = await authService.requestOtp(email, role);
     res.status(200).json(result);
   } catch (error) {

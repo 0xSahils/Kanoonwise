@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/slices/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -24,6 +28,18 @@ const Header = () => {
     // Navigate to specific service/lawyer category pages
     const path = `/${item.name.toLowerCase().replace(/\s+/g, "-")}`;
     navigate(path);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
+  const handleDashboardNavigation = () => {
+    const dashboardPath =
+      user?.role === "lawyer" ? "/lawyer/dashboard" : "/client/dashboard";
+    navigate(dashboardPath);
+    setIsMenuOpen(false);
   };
 
   const navItems = [
@@ -62,20 +78,60 @@ const Header = () => {
   return (
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
+        isScrolled ? "bg-white shadow-lg" : "bg-white/10 backdrop-blur-md"
       }`}
     >
-      <nav className="container-custom">
+      {/* Top Contact Bar */}
+      {!isScrolled && (
+        <div className="bg-gray-900 text-white py-2 hidden lg:block">
+          <div className="max-w-7xl mx-auto px-4 flex justify-between items-center text-sm">
+            <div className="flex items-center space-x-8">
+              <span className="flex items-center">
+                <i className="fas fa-clock mr-2 text-yellow-500"></i>
+                8:00 - 19:00 Our Opening Hours Mon. - Fri.
+              </span>
+              <span className="flex items-center">
+                <i className="fas fa-phone mr-2 text-yellow-500"></i>
+                +91 98765 43210 Call Us For Free Consultation
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <a
+                href="#"
+                className="hover:text-yellow-500 transition-colors duration-300"
+              >
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                className="hover:text-yellow-500 transition-colors duration-300"
+              >
+                <i className="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="#"
+                className="hover:text-yellow-500 transition-colors duration-300"
+              >
+                <i className="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <nav className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <a href="/" className="flex items-center space-x-3">
             <div className="flex items-center space-x-3">
-              <img
-                src="/logo.jpg"
-                alt="Kanoonwise Logo"
-                className="h-10 w-auto object-contain rounded-lg"
-              />
-              <span className="text-2xl font-bold text-gray-900">
+              <div className="w-10 h-10 bg-yellow-500 rounded flex items-center justify-center">
+                <span className="text-gray-900 font-bold text-xl">K</span>
+              </div>
+              <span
+                className={`text-2xl font-light tracking-wide ${
+                  isScrolled ? "text-gray-900" : "text-white"
+                }`}
+              >
                 Kanoonwise
               </span>
             </div>
@@ -91,7 +147,11 @@ const Header = () => {
                       `/${item.name.toLowerCase().replace(/\s+/g, "-")}`
                     )
                   }
-                  className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
+                  className={`flex items-center space-x-1 font-medium transition-colors duration-200 ${
+                    isScrolled
+                      ? "text-gray-700 hover:text-yellow-600"
+                      : "text-white hover:text-yellow-500"
+                  }`}
                 >
                   <span>{item.name}</span>
                   <i className="fas fa-chevron-down text-xs group-hover:rotate-180 transition-transform duration-200"></i>
@@ -104,10 +164,10 @@ const Header = () => {
                       <button
                         key={dropIndex}
                         onClick={() => handleDropdownClick(dropdownItem)}
-                        className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors duration-200 w-full text-left"
+                        className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors duration-200 w-full text-left"
                       >
                         <i
-                          className={`${dropdownItem.icon} text-primary-500 w-4`}
+                          className={`${dropdownItem.icon} text-yellow-500 w-4`}
                         ></i>
                         <span>{dropdownItem.name}</span>
                       </button>
@@ -119,13 +179,21 @@ const Header = () => {
 
             <button
               onClick={() => handleNavigation("/about")}
-              className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
+              className={`font-medium transition-colors duration-200 ${
+                isScrolled
+                  ? "text-gray-700 hover:text-yellow-600"
+                  : "text-white hover:text-yellow-500"
+              }`}
             >
               About
             </button>
             <button
               onClick={() => handleNavigation("/contact")}
-              className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
+              className={`font-medium transition-colors duration-200 ${
+                isScrolled
+                  ? "text-gray-700 hover:text-yellow-600"
+                  : "text-white hover:text-yellow-500"
+              }`}
             >
               Contact
             </button>
@@ -133,18 +201,78 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            <button
-              onClick={() => handleNavigation("/login")}
-              className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => handleNavigation("/login")}
-              className="btn-primary"
-            >
-              Get Started
-            </button>
+            {isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => handleNavigation("/my-appointments")}
+                  className={`font-medium transition-colors duration-200 flex items-center ${
+                    isScrolled
+                      ? "text-gray-700 hover:text-yellow-600"
+                      : "text-white hover:text-yellow-500"
+                  }`}
+                >
+                  <i className="fas fa-calendar-alt mr-2"></i>
+                  My Appointments
+                </button>
+                <div className="relative group">
+                  <button
+                    className={`flex items-center space-x-2 font-medium transition-colors duration-200 ${
+                      isScrolled
+                        ? "text-gray-700 hover:text-yellow-600"
+                        : "text-white hover:text-yellow-500"
+                    }`}
+                  >
+                    <i className="fas fa-user-circle"></i>
+                    <span>{user?.email?.split("@")[0] || "User"}</span>
+                    <i className="fas fa-chevron-down text-xs"></i>
+                  </button>
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="py-2">
+                      <button
+                        onClick={handleDashboardNavigation}
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 w-full text-left"
+                      >
+                        <i className="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                      </button>
+                      <button
+                        onClick={() => handleNavigation("/my-appointments")}
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 w-full text-left"
+                      >
+                        <i className="fas fa-calendar-alt"></i>
+                        <span>My Appointments</span>
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 w-full text-left border-t border-gray-100"
+                      >
+                        <i className="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => handleNavigation("/login")}
+                  className={`font-medium transition-colors duration-200 ${
+                    isScrolled
+                      ? "text-gray-700 hover:text-yellow-600"
+                      : "text-white hover:text-yellow-500"
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => handleNavigation("/quick-booking")}
+                  className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-semibold px-6 py-2 transition-all duration-300 transform hover:scale-105"
+                >
+                  Get Started
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -190,7 +318,7 @@ const Header = () => {
                     <button
                       key={dropIndex}
                       onClick={() => handleDropdownClick(dropdownItem)}
-                      className="flex items-center space-x-2 text-gray-600 hover:text-primary-600 py-1 transition-colors duration-200 w-full text-left"
+                      className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 py-1 transition-colors duration-200 w-full text-left"
                     >
                       <i className={`${dropdownItem.icon} text-xs`}></i>
                       <span className="text-sm">{dropdownItem.name}</span>
@@ -204,28 +332,57 @@ const Header = () => {
               <div className="space-y-3">
                 <button
                   onClick={() => handleNavigation("/about")}
-                  className="w-full text-left text-gray-700 hover:text-primary-600 font-medium py-2 transition-colors duration-200"
+                  className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
                 >
                   About
                 </button>
                 <button
                   onClick={() => handleNavigation("/contact")}
-                  className="w-full text-left text-gray-700 hover:text-primary-600 font-medium py-2 transition-colors duration-200"
+                  className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
                 >
                   Contact
                 </button>
-                <button
-                  onClick={() => handleNavigation("/login")}
-                  className="w-full text-left text-gray-700 hover:text-primary-600 font-medium py-2 transition-colors duration-200"
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => handleNavigation("/login")}
-                  className="w-full btn-primary"
-                >
-                  Get Started
-                </button>
+
+                {isAuthenticated ? (
+                  <>
+                    <button
+                      onClick={handleDashboardNavigation}
+                      className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200 flex items-center space-x-2"
+                    >
+                      <i className="fas fa-tachometer-alt"></i>
+                      <span>Dashboard</span>
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/my-appointments")}
+                      className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200 flex items-center space-x-2"
+                    >
+                      <i className="fas fa-calendar-alt"></i>
+                      <span>My Appointments</span>
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left text-red-600 hover:text-red-700 font-medium py-2 transition-colors duration-200 flex items-center space-x-2 border-t border-gray-100 pt-3"
+                    >
+                      <i className="fas fa-sign-out-alt"></i>
+                      <span>Logout</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => handleNavigation("/login")}
+                      className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
+                    >
+                      Login
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/quick-booking")}
+                      className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-semibold py-3 transition-all duration-300"
+                    >
+                      Get Started
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

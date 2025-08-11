@@ -44,26 +44,54 @@ const SimpleBooking = () => {
     e.preventDefault();
     setSubmitting(true);
 
+    // Validate required fields
+    if (!bookingData.preferred_date || !bookingData.preferred_time) {
+      alert("Please select both date and time for your consultation.");
+      setSubmitting(false);
+      return;
+    }
+
+    if (!bookingData.case_description.trim()) {
+      alert("Please provide a case description.");
+      setSubmitting(false);
+      return;
+    }
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/client/book`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          lawyer_id: lawyerId,
-          ...bookingData,
-          scheduled_time: `${bookingData.preferred_date}T${bookingData.preferred_time}:00.000Z`,
-        }),
-      });
+      const bookingPayload = {
+        lawyer_id: lawyerId,
+        consultation_type: bookingData.consultation_type,
+        case_description: bookingData.case_description,
+        scheduled_time: new Date(
+          `${bookingData.preferred_date}T${bookingData.preferred_time}:00`
+        ).toISOString(),
+      };
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/client/book`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(bookingPayload),
+        }
+      );
 
       if (response.ok) {
-        alert("Consultation booked successfully! The lawyer will confirm your appointment.");
-        navigate("/client/appointments");
+        alert(
+          "Consultation booked successfully! The lawyer will confirm your appointment."
+        );
+
+        // Small delay to ensure authentication state is properly set before navigation
+        setTimeout(() => {
+          navigate("/client/appointments");
+        }, 300);
       } else {
         const error = await response.json();
-        alert(error.message || "Failed to book consultation");
+        console.error("Booking error:", error);
+        alert(error.message || error.error || "Failed to book consultation");
       }
     } catch (error) {
       console.error("Error booking consultation:", error);
@@ -93,7 +121,9 @@ const SimpleBooking = () => {
         <Header />
         <div className="container-custom py-20">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Lawyer Not Found</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              Lawyer Not Found
+            </h1>
             <button
               onClick={() => navigate("/search-lawyers")}
               className="bg-primary-600 text-white px-6 py-2 rounded-md hover:bg-primary-700"
@@ -110,7 +140,7 @@ const SimpleBooking = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <div className="container-custom py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -164,7 +194,9 @@ const SimpleBooking = () => {
 
                 <div className="space-y-4">
                   <div>
-                    <div className="text-sm text-gray-500 mb-1">Specialization</div>
+                    <div className="text-sm text-gray-500 mb-1">
+                      Specialization
+                    </div>
                     <div className="flex flex-wrap gap-1">
                       {lawyer.specialization?.map((spec, index) => (
                         <span
@@ -190,7 +222,9 @@ const SimpleBooking = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="text-sm text-gray-500 mb-1">Consultation Fee</div>
+                    <div className="text-sm text-gray-500 mb-1">
+                      Consultation Fee
+                    </div>
                     <div className="text-2xl font-bold text-primary-600">
                       ₹{lawyer.fee_structure?.consultation?.toLocaleString()}
                     </div>
@@ -219,7 +253,10 @@ const SimpleBooking = () => {
                           value="online"
                           checked={bookingData.consultation_type === "online"}
                           onChange={(e) =>
-                            setBookingData({ ...bookingData, consultation_type: e.target.value })
+                            setBookingData({
+                              ...bookingData,
+                              consultation_type: e.target.value,
+                            })
                           }
                           className="mr-2"
                         />
@@ -232,7 +269,10 @@ const SimpleBooking = () => {
                           value="offline"
                           checked={bookingData.consultation_type === "offline"}
                           onChange={(e) =>
-                            setBookingData({ ...bookingData, consultation_type: e.target.value })
+                            setBookingData({
+                              ...bookingData,
+                              consultation_type: e.target.value,
+                            })
                           }
                           className="mr-2"
                         />
@@ -248,7 +288,10 @@ const SimpleBooking = () => {
                     <textarea
                       value={bookingData.case_description}
                       onChange={(e) =>
-                        setBookingData({ ...bookingData, case_description: e.target.value })
+                        setBookingData({
+                          ...bookingData,
+                          case_description: e.target.value,
+                        })
                       }
                       rows={4}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -266,7 +309,10 @@ const SimpleBooking = () => {
                         type="date"
                         value={bookingData.preferred_date}
                         onChange={(e) =>
-                          setBookingData({ ...bookingData, preferred_date: e.target.value })
+                          setBookingData({
+                            ...bookingData,
+                            preferred_date: e.target.value,
+                          })
                         }
                         min={new Date().toISOString().split("T")[0]}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -280,7 +326,10 @@ const SimpleBooking = () => {
                       <select
                         value={bookingData.preferred_time}
                         onChange={(e) =>
-                          setBookingData({ ...bookingData, preferred_time: e.target.value })
+                          setBookingData({
+                            ...bookingData,
+                            preferred_time: e.target.value,
+                          })
                         }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                         required
@@ -298,7 +347,9 @@ const SimpleBooking = () => {
                   </div>
 
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-medium text-gray-900 mb-2">Booking Summary</h3>
+                    <h3 className="font-medium text-gray-900 mb-2">
+                      Booking Summary
+                    </h3>
                     <div className="flex justify-between items-center">
                       <span>Consultation Fee:</span>
                       <span className="font-bold text-primary-600">
