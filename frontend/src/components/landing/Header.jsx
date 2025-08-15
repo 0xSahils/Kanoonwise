@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/slices/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Check if we're on homepage
+  const isHomepage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,9 +29,32 @@ const Header = () => {
   };
 
   const handleDropdownClick = (item) => {
-    // Navigate to specific service/lawyer category pages
-    const path = `/${item.name.toLowerCase().replace(/\s+/g, "-")}`;
-    navigate(path);
+    // Handle specific navigation cases
+    const routeMap = {
+      "Legal Articles": "/articles",
+      "Legal Calculators": "/legal-calculators",
+      "Document Templates": "/document-templates",
+      "Legal FAQs": "/legal-faqs",
+      "Company Registration": "/legal-services",
+      "Legal Documentation": "/legal-services",
+      "Trademark Registration": "/legal-services",
+      "GST Services": "/legal-services",
+    };
+
+    if (routeMap[item.name]) {
+      navigate(routeMap[item.name]);
+    } else if (item.name.includes("Lawyers")) {
+      // Navigate to lawyer search with specialization filter
+      const specialization = item.name.replace(" Lawyers", "");
+      navigate(
+        `/search-lawyers?specialization=${encodeURIComponent(specialization)}`
+      );
+    } else {
+      // Default navigation for services
+      const path = `/${item.name.toLowerCase().replace(/\s+/g, "-")}`;
+      navigate(path);
+    }
+    setIsMenuOpen(false);
   };
 
   const handleLogout = () => {
@@ -78,8 +105,13 @@ const Header = () => {
   return (
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-lg" : "bg-white/10 backdrop-blur-md"
+        isHomepage
+          ? isScrolled
+            ? "bg-white shadow-lg"
+            : "bg-white/10 backdrop-blur-md"
+          : "bg-white shadow-lg"
       }`}
+      style={{ height: "auto" }}
     >
       {/* Top Contact Bar */}
       {!isScrolled && (
@@ -129,7 +161,11 @@ const Header = () => {
               </div>
               <span
                 className={`text-2xl font-light tracking-wide ${
-                  isScrolled ? "text-gray-900" : "text-white"
+                  isHomepage
+                    ? isScrolled
+                      ? "text-gray-900"
+                      : "text-white"
+                    : "text-gray-900"
                 }`}
               >
                 Kanoonwise
@@ -148,9 +184,11 @@ const Header = () => {
                     )
                   }
                   className={`flex items-center space-x-1 font-medium transition-colors duration-200 ${
-                    isScrolled
-                      ? "text-gray-700 hover:text-yellow-600"
-                      : "text-white hover:text-yellow-500"
+                    isHomepage
+                      ? isScrolled
+                        ? "text-gray-700 hover:text-yellow-600"
+                        : "text-white hover:text-yellow-500"
+                      : "text-gray-700 hover:text-yellow-600"
                   }`}
                 >
                   <span>{item.name}</span>
@@ -180,19 +218,23 @@ const Header = () => {
             <button
               onClick={() => handleNavigation("/about")}
               className={`font-medium transition-colors duration-200 ${
-                isScrolled
-                  ? "text-gray-700 hover:text-yellow-600"
-                  : "text-white hover:text-yellow-500"
+                isHomepage
+                  ? isScrolled
+                    ? "text-gray-700 hover:text-yellow-600"
+                    : "text-white hover:text-yellow-500"
+                  : "text-gray-700 hover:text-yellow-600"
               }`}
             >
-              About
+              Services
             </button>
             <button
               onClick={() => handleNavigation("/contact")}
               className={`font-medium transition-colors duration-200 ${
-                isScrolled
-                  ? "text-gray-700 hover:text-yellow-600"
-                  : "text-white hover:text-yellow-500"
+                isHomepage
+                  ? isScrolled
+                    ? "text-gray-700 hover:text-yellow-600"
+                    : "text-white hover:text-yellow-500"
+                  : "text-gray-700 hover:text-yellow-600"
               }`}
             >
               Contact
@@ -206,9 +248,11 @@ const Header = () => {
                 <button
                   onClick={() => handleNavigation("/my-appointments")}
                   className={`font-medium transition-colors duration-200 flex items-center ${
-                    isScrolled
-                      ? "text-gray-700 hover:text-yellow-600"
-                      : "text-white hover:text-yellow-500"
+                    isHomepage
+                      ? isScrolled
+                        ? "text-gray-700 hover:text-yellow-600"
+                        : "text-white hover:text-yellow-500"
+                      : "text-gray-700 hover:text-yellow-600"
                   }`}
                 >
                   <i className="fas fa-calendar-alt mr-2"></i>
@@ -217,9 +261,11 @@ const Header = () => {
                 <div className="relative group">
                   <button
                     className={`flex items-center space-x-2 font-medium transition-colors duration-200 ${
-                      isScrolled
-                        ? "text-gray-700 hover:text-yellow-600"
-                        : "text-white hover:text-yellow-500"
+                      isHomepage
+                        ? isScrolled
+                          ? "text-gray-700 hover:text-yellow-600"
+                          : "text-white hover:text-yellow-500"
+                        : "text-gray-700 hover:text-yellow-600"
                     }`}
                   >
                     <i className="fas fa-user-circle"></i>
@@ -256,20 +302,35 @@ const Header = () => {
             ) : (
               <>
                 <button
+                  onClick={() => handleNavigation("/join-as-lawyer")}
+                  className={`font-medium transition-colors duration-200 flex items-center ${
+                    isHomepage
+                      ? isScrolled
+                        ? "text-gray-700 hover:text-orange-600"
+                        : "text-white hover:text-orange-300"
+                      : "text-gray-700 hover:text-orange-600"
+                  }`}
+                >
+                  <i className="fas fa-balance-scale mr-2"></i>
+                  Join as Advocate
+                </button>
+                <button
                   onClick={() => handleNavigation("/login")}
                   className={`font-medium transition-colors duration-200 ${
-                    isScrolled
-                      ? "text-gray-700 hover:text-yellow-600"
-                      : "text-white hover:text-yellow-500"
+                    isHomepage
+                      ? isScrolled
+                        ? "text-gray-700 hover:text-yellow-600"
+                        : "text-white hover:text-yellow-500"
+                      : "text-gray-700 hover:text-yellow-600"
                   }`}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => handleNavigation("/quick-booking")}
-                  className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-semibold px-6 py-2 transition-all duration-300 transform hover:scale-105"
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-semibold px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105"
                 >
-                  Get Started
+                  Find Advocate
                 </button>
               </>
             )}
@@ -334,7 +395,7 @@ const Header = () => {
                   onClick={() => handleNavigation("/about")}
                   className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
                 >
-                  About
+                  Services
                 </button>
                 <button
                   onClick={() => handleNavigation("/contact")}

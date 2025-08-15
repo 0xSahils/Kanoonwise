@@ -70,7 +70,7 @@ const Footer = () => {
     {
       title: "Company",
       links: [
-        { name: "About Us", href: "#" },
+        { name: "Legal Services", href: "/services" },
         { name: "Contact", href: "#" },
         { name: "Careers", href: "#" },
         { name: "Press", href: "#" },

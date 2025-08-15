@@ -123,4 +123,12 @@
     background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
     background-size: 20px 20px;
   }
+
+  .navbar-spacing {
+    padding-top: 120px; /* Space for fixed navbar with contact bar */
+  }
+
+  .navbar-spacing-simple {
+    padding-top: 80px; /* Space for fixed navbar without contact bar */
+  }
 }

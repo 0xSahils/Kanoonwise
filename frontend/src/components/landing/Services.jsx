@@ -20,80 +20,72 @@ const Services = () => {
 
   const services = [
     {
-      icon: "fas fa-building",
-      title: "Business Setup",
+      icon: "fas fa-gavel",
+      title: "Criminal Law",
       description:
-        "Company registration, LLP formation, and business compliance services",
+        "Expert criminal defense representation in Indian courts from bail to trial",
+      features: ["Bail Applications", "Criminal Defense", "FIR Consultation"],
+      price: "₹2,999",
+      popular: true,
+      gradient: "from-red-500 to-red-600",
+    },
+    {
+      icon: "fas fa-home",
+      title: "Family & Matrimonial",
+      description:
+        "Comprehensive family law services including divorce, custody, and property",
+      features: ["Divorce Proceedings", "Child Custody", "Maintenance Cases"],
+      price: "₹1,999",
+      popular: false,
+      gradient: "from-pink-500 to-pink-600",
+    },
+    {
+      icon: "fas fa-building",
+      title: "Corporate & Business",
+      description:
+        "Complete business legal solutions from incorporation to compliance",
       features: [
-        "Private Limited Company",
-        "LLP Registration",
-        "Partnership Firm",
+        "Company Registration",
+        "GST & Tax Compliance",
+        "Contract Drafting",
       ],
-      price: "₹999",
+      price: "₹1,499",
       popular: false,
       gradient: "from-blue-500 to-blue-600",
     },
     {
-      icon: "fas fa-file-contract",
-      title: "Legal Documentation",
+      icon: "fas fa-landmark",
+      title: "Property & Real Estate",
       description:
-        "Professional drafting of contracts, agreements, and legal documents",
-      features: ["Contract Drafting", "Legal Agreements", "Document Review"],
-      price: "₹1,499",
+        "Property disputes, documentation, and real estate legal matters",
+      features: [
+        "Property Verification",
+        "Title Disputes",
+        "Registration Services",
+      ],
+      price: "₹2,499",
+      popular: false,
+      gradient: "from-green-500 to-green-600",
+    },
+    {
+      icon: "fas fa-balance-scale",
+      title: "Civil Litigation",
+      description:
+        "Civil court representation for disputes, recovery, and legal matters",
+      features: ["Civil Suits", "Money Recovery", "Contract Disputes"],
+      price: "₹3,499",
       popular: false,
       gradient: "from-purple-500 to-purple-600",
     },
     {
-      icon: "fas fa-trademark",
-      title: "Intellectual Property",
+      icon: "fas fa-shield-alt",
+      title: "Consumer Protection",
       description:
-        "Trademark registration, copyright protection, and patent filing",
+        "Consumer court cases, product liability, and service deficiency matters",
       features: [
-        "Trademark Registration",
-        "Copyright Protection",
-        "Patent Filing",
-      ],
-      price: "₹2,499",
-      popular: true,
-      gradient: "from-green-500 to-green-600",
-    },
-    {
-      icon: "fas fa-calculator",
-      title: "Tax & Compliance",
-      description:
-        "GST registration, tax filing, and regulatory compliance services",
-      features: [
-        "GST Registration",
-        "Tax Return Filing",
-        "Compliance Management",
-      ],
-      price: "₹799",
-      popular: false,
-      gradient: "from-orange-500 to-orange-600",
-    },
-    {
-      icon: "fas fa-home",
-      title: "Property Legal",
-      description:
-        "Property verification, registration, and dispute resolution",
-      features: [
-        "Property Verification",
-        "Registration Services",
-        "Dispute Resolution",
-      ],
-      price: "₹1,999",
-      popular: false,
-      gradient: "from-red-500 to-red-600",
-    },
-    {
-      icon: "fas fa-users",
-      title: "Family Legal",
-      description:
-        "Divorce, custody, matrimonial disputes, and family law matters",
-      features: [
-        "Divorce Proceedings",
-        "Child Custody",
-        "Matrimonial Disputes",
+        "Consumer Complaints",
+        "Product Liability",
+        "Service Deficiency",
       ],
       price: "₹2,999",
       popular: false,
@@ -106,17 +98,19 @@ const Services = () => {
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-primary-100 rounded-full px-4 py-2 mb-4">
-            <i className="fas fa-briefcase text-primary-600"></i>
-            <span className="text-primary-600 font-semibold">Our Services</span>
+          <div className="inline-flex items-center space-x-2 bg-orange-100 rounded-full px-4 py-2 mb-4">
+            <i className="fas fa-balance-scale text-orange-600"></i>
+            <span className="text-orange-600 font-semibold">
+              🇮🇳 Legal Expertise
+            </span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Comprehensive Legal Solutions
+            Expert Legal Services Across India
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From business setup to complex legal matters, we provide expert
-            services tailored to meet your specific needs with transparent
-            pricing.
+            Connect with specialized advocates for all your legal needs - from
+            Supreme Court to District Courts. Professional legal consultation
+            with transparent pricing across all major Indian cities.
           </p>
         </div>
 

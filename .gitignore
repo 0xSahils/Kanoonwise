@@ -103,6 +103,8 @@ Thumbs.db
 *.backup
 *~
 
+
+IMAGE_REQUIREMENTS.md
 # Lock files (uncomment if you want to ignore them)
 # package-lock.json
 # yarn.lock

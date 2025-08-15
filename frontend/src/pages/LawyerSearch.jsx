@@ -136,7 +136,7 @@ const LawyerSearch = () => {
     return (
       <div className="min-h-screen">
         <Header />
-        <div className="container-custom py-20">
+        <div className="container-custom pt-20 pb-20">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
           </div>
@@ -151,7 +151,7 @@ const LawyerSearch = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <section className="relative navbar-spacing pb-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
         <div className="absolute inset-0 opacity-10">
           <img
             src="/hero.jpg"

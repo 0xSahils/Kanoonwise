@@ -440,7 +440,7 @@ const QuickBooking = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <section className="relative navbar-spacing pb-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
         <div className="absolute inset-0 opacity-10">
           <img
             src="/hero.jpg"
@@ -448,7 +448,7 @@ const QuickBooking = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <div className="text-center">
             <div className="inline-block w-16 h-1 bg-yellow-500 mb-6"></div>
             <h1 className="text-4xl sm:text-5xl font-light mb-6">

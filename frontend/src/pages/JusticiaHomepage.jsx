@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/landing/Header";
+import KnowledgeBank from "../components/landing/KnowledgeBank";
 
 const JusticiaHomepage = () => {
   const navigate = useNavigate();
@@ -674,6 +675,9 @@ const JusticiaHomepage = () => {
           </button>
         </div>
       </section>
+
+      {/* Knowledge Bank Section */}
+      <KnowledgeBank />
 
       {/* Contact Section */}
       <section className="py-20 bg-gray-900 text-white">

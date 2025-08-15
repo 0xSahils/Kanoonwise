@@ -15,6 +15,13 @@ import AuthProvider from "./components/auth/AuthProvider";
 // Landing Page
 import Landing from "./pages/Landing";
 import JusticiaHomepage from "./pages/JusticiaHomepage";
+import LawyerInvitation from "./pages/LawyerInvitation";
+import Articles from "./pages/ArticlesNew";
+import ArticleDetail from "./pages/ArticleDetail";
+import LegalServices from "./pages/LegalServices";
+import LegalCalculators from "./pages/LegalCalculators";
+import DocumentTemplates from "./pages/DocumentTemplates";
+import LegalFAQs from "./pages/LegalFAQs";
 import LawyerSearch from "./pages/LawyerSearch";
 
 // Auth Pages
@@ -56,6 +63,13 @@ function App() {
             />
             <Route path="/quick-book/:lawyerId" element={<QuickBooking />} />
             <Route path="/quick-booking" element={<QuickBooking />} />
+            <Route path="/join-as-lawyer" element={<LawyerInvitation />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/articles/:id" element={<ArticleDetail />} />
+            <Route path="/legal-services" element={<LegalServices />} />
+            <Route path="/legal-calculators" element={<LegalCalculators />} />
+            <Route path="/document-templates" element={<DocumentTemplates />} />
+            <Route path="/legal-faqs" element={<LegalFAQs />} />
             <Route path="/my-appointments" element={<MyAppointments />} />
 
             {/* Auth Routes */}

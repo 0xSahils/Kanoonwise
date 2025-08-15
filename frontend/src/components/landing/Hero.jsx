@@ -47,19 +47,21 @@ const Hero = () => {
   ];
 
   const popularSearches = [
-    "Criminal Lawyer",
-    "Divorce Lawyer",
-    "Property Lawyer",
-    "Corporate Lawyer",
-    "Family Lawyer",
-    "Civil Lawyer",
+    "Criminal Law Expert",
+    "Family Law Specialist",
+    "Corporate Law Advisor",
+    "Property Law Consultant",
+    "Civil Law Advocate",
+    "Tax Law Expert",
+    "Constitutional Law",
+    "Consumer Protection",
   ];
 
   const stats = [
-    { number: "15,000+", label: "Verified Lawyers" },
-    { number: "50,000+", label: "Cases Resolved" },
-    { number: "98%", label: "Success Rate" },
-    { number: "24/7", label: "Support Available" },
+    { number: "5,000+", label: "Expert Advocates" },
+    { number: "25,000+", label: "Legal Consultations" },
+    { number: "50+", label: "Indian Cities" },
+    { number: "4.8/5", label: "Client Rating" },
   ];
 
   const floatingCards = [
@@ -102,21 +104,23 @@ const Hero = () => {
                 <i className="fas fa-check text-white text-xs"></i>
               </div>
               <span className="text-sm font-semibold text-primary-700">
-                India's Largest Lawyer Search Platform
+                🇮🇳 India's Premier Legal Network
               </span>
             </div>
 
             {/* Main Heading */}
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
-                Find the Right <span className="text-primary-600">Lawyer</span>
+                Connect with India's
+                <span className="text-primary-600"> Best Advocates</span>
                 <br />
-                for Your Legal Needs
+                <span className="text-orange-600">Expert Legal Solutions</span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed max-w-2xl">
-                Get instant access to verified lawyers, legal services, and
-                expert consultation. From company registration to complex
-                litigation - we've got you covered.
+                Access verified advocates across India for expert legal
+                consultation. From Supreme Court to District Courts - find
+                specialized legal expertise for your constitutional, civil,
+                criminal, and corporate matters.
               </p>
             </div>
 
@@ -204,7 +208,7 @@ const Hero = () => {
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                 <div className="relative">
                   <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop&crop=face"
+                    src="frontend\public\Indian_adv_courtroom.jpeg"
                     alt="Professional Lawyer"
                     className="w-64 h-80 object-cover rounded-2xl shadow-2xl"
                   />
