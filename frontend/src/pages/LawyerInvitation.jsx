@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "../components/landing/Header";
 import Footer from "../components/landing/Footer";
 
 const LawyerInvitation = () => {
-  const navigate = useNavigate();
-
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -129,25 +126,27 @@ const LawyerInvitation = () => {
               </div>
             </div>
 
-            {/* Right Content - Image Placeholder */}
-           <div className="relative">
-  <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl p-8 h-96 flex flex-col items-center justify-center border border-yellow-500/30">
-    <div className="text-center text-yellow-400">
-      <i className="fas fa-balance-scale text-6xl mb-4"></i>
-      <p className="text-lg font-semibold">
-        Professional Legal Network
-      </p>
-      <div className="mt-4">
-        <img
-          src="/professional_lawyers.jpeg"
-          alt="Lawyer Invitation"
-          className="rounded-lg shadow-lg max-h-40 object-cover"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
+            {/* Right Content - Professional Lawyers Image */}
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden h-96 border border-yellow-500/30">
+                <img
+                  src="/lawyer-invitation.jpg"
+                  alt="Professional Advocates in Indian Courtroom"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-lg font-semibold">
+                    Join India's Premier Legal Network
+                  </p>
+                  <p className="text-sm opacity-90">
+                    Connect with clients nationwide
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Benefits Section */}

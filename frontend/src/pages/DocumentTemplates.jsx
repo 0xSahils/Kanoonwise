@@ -31,7 +31,7 @@ const DocumentTemplates = () => {
       downloads: "2.5k",
       rating: 4.8,
       price: "Free",
-      image: "[Image: NDA document with business handshake]",
+      image: "/template-nda.png",
       features: ["Mutual NDA", "One-way NDA", "Employee NDA", "Vendor NDA"],
     },
     {
@@ -43,7 +43,7 @@ const DocumentTemplates = () => {
       downloads: "3.2k",
       rating: 4.9,
       price: "₹299",
-      image: "[Image: Rental agreement with house keys]",
+      image: "/template-rental.png",
       features: [
         "11-month Agreement",
         "Security Deposit Clause",
@@ -60,7 +60,7 @@ const DocumentTemplates = () => {
       downloads: "1.8k",
       rating: 4.7,
       price: "₹499",
-      image: "[Image: Employment contract with pen and office background]",
+      image: "/template-employment.png",
       features: [
         "Salary Structure",
         "Leave Policy",
@@ -77,7 +77,7 @@ const DocumentTemplates = () => {
       downloads: "1.5k",
       rating: 4.6,
       price: "₹199",
-      image: "[Image: Legal notice document with court stamp]",
+      image: "/template-legal-notice.png",
       features: [
         "Demand Notice",
         "Defamation Notice",
@@ -94,7 +94,7 @@ const DocumentTemplates = () => {
       downloads: "900",
       rating: 4.9,
       price: "₹799",
-      image: "[Image: Will document with family photo]",
+      image: "/template-will.jpg",
       features: [
         "Asset Distribution",
         "Guardian Appointment",
@@ -111,7 +111,7 @@ const DocumentTemplates = () => {
       downloads: "1.2k",
       rating: 4.8,
       price: "₹599",
-      image: "[Image: Partnership deed with business partners shaking hands]",
+      image: "/template-partnership.webp",
       features: [
         "Profit Sharing",
         "Capital Contribution",
@@ -178,14 +178,19 @@ const DocumentTemplates = () => {
             </div>
 
             <div className="relative">
-              <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl p-8 h-96 flex items-center justify-center border border-yellow-500/30">
-                <div className="text-center text-yellow-400">
-                  <i className="fas fa-file-contract text-6xl mb-4"></i>
+              <div className="rounded-2xl overflow-hidden h-96 border border-yellow-500/30">
+                <img
+                  src="/templates-hero.jpg"
+                  alt="Stack of Legal Documents and Templates"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
                   <p className="text-lg font-semibold">
                     Professional Templates
                   </p>
-                  <p className="text-sm opacity-75">
-                    [Image: Stack of legal documents and templates]
+                  <p className="text-sm opacity-90">
+                    Ready-to-use legal documents
                   </p>
                 </div>
               </div>

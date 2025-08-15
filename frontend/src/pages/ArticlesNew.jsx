@@ -34,7 +34,7 @@ const Articles = () => {
       date: "2024-01-15",
       readTime: "8 min read",
       featured: true,
-      image: "[Image: Indian Constitution book with scales of justice]",
+      image: "/article-constitution.png",
     },
     {
       id: 2,
@@ -46,7 +46,7 @@ const Articles = () => {
       date: "2024-01-12",
       readTime: "12 min read",
       featured: true,
-      image: "[Image: Property documents and registration papers]",
+      image: "/article-property.png",
     },
     {
       id: 3,
@@ -58,7 +58,7 @@ const Articles = () => {
       date: "2024-01-10",
       readTime: "10 min read",
       featured: false,
-      image: "[Image: Court gavel and legal documents]",
+      image: "/article-court-gavel.jpeg",
     },
   ];
 
@@ -105,14 +105,19 @@ const Articles = () => {
               </p>
             </div>
 
-            {/* Right Content - Image Space */}
+            {/* Right Content - Legal Books Image */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl p-8 h-96 flex items-center justify-center border border-yellow-500/30">
-                <div className="text-center text-yellow-400">
-                  <i className="fas fa-newspaper text-6xl mb-4"></i>
+              <div className="rounded-2xl overflow-hidden h-96 border border-yellow-500/30">
+                <img
+                  src="/articles-hero.jpg"
+                  alt="Legal Books and Documents on Professional Desk"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
                   <p className="text-lg font-semibold">Legal Knowledge Hub</p>
-                  <p className="text-sm opacity-75">
-                    <img src="/frontend/public/legal_books.jpg" />
+                  <p className="text-sm opacity-90">
+                    Expert insights & analysis
                   </p>
                 </div>
               </div>
@@ -144,11 +149,12 @@ const Articles = () => {
                 onClick={() => handleArticleClick(article.id)}
                 className="bg-gray-700 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden group border border-gray-600"
               >
-                <div className="h-48 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center border-b border-gray-600">
-                  <div className="text-center text-yellow-400">
-                    <i className="fas fa-newspaper text-4xl mb-2"></i>
-                    <p className="text-sm opacity-75">{article.image}</p>
-                  </div>
+                <div className="h-48 overflow-hidden border-b border-gray-600">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <div className="p-6">
                   <div className="flex items-center space-x-4 text-sm mb-4">

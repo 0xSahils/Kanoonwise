@@ -25,7 +25,7 @@ const LegalServices = () => {
       ],
       price: "Starting from ₹2,999",
       icon: "fas fa-building",
-      image: "[Image: Business registration documents and corporate seal]",
+      image: "/service-business-registration.jpg",
       gradient: "from-blue-500 to-blue-600",
     },
     {
@@ -41,7 +41,7 @@ const LegalServices = () => {
       ],
       price: "Starting from ₹1,499",
       icon: "fas fa-file-contract",
-      image: "[Image: Legal documents and contract papers on desk]",
+      image: "/service-legal-documentation.webp",
       gradient: "from-purple-500 to-purple-600",
     },
     {
@@ -57,7 +57,7 @@ const LegalServices = () => {
       ],
       price: "Starting from ₹3,999",
       icon: "fas fa-trademark",
-      image: "[Image: Trademark certificate and brand protection documents]",
+      image: "/service-trademark.png",
       gradient: "from-green-500 to-green-600",
     },
     {
@@ -73,7 +73,7 @@ const LegalServices = () => {
       ],
       price: "Starting from ₹999",
       icon: "fas fa-calculator",
-      image: "[Image: GST documents and tax calculation sheets]",
+      image: "/service-gst.jpg",
       gradient: "from-orange-500 to-orange-600",
     },
   ];
@@ -133,16 +133,21 @@ const LegalServices = () => {
               </div>
             </div>
 
-            {/* Right Content - Image Space */}
+            {/* Right Content - Legal Services Image */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl p-8 h-96 flex items-center justify-center border border-yellow-500/30">
-                <div className="text-center text-yellow-400">
-                  <i className="fas fa-balance-scale text-6xl mb-4"></i>
+              <div className="rounded-2xl overflow-hidden h-96 border border-yellow-500/30">
+                <img
+                  src="/legal-services-hero.jpg"
+                  alt="Professional Lawyers Working on Legal Documents"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
                   <p className="text-lg font-semibold">
                     Professional Legal Services
                   </p>
-                  <p className="text-sm opacity-75">
-                    [Image: Legal professionals working on documents]
+                  <p className="text-sm opacity-90">
+                    Expert solutions for all legal needs
                   </p>
                 </div>
               </div>

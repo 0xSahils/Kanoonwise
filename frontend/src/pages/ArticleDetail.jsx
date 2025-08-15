@@ -26,7 +26,7 @@ const ArticleDetail = () => {
         "Senior Advocate at Supreme Court of India with 15+ years experience in Constitutional Law",
       date: "2024-01-15",
       readTime: "8 min read",
-      image: "[Image: Indian Constitution book with scales of justice]",
+      image: "/article-constitution.png",
       content: `
         <h2>Introduction to Article 21</h2>
         <p>Article 21 of the Indian Constitution is one of the most fundamental and widely interpreted provisions in Indian jurisprudence. It states: "No person shall be deprived of his life or personal liberty except according to procedure established by law."</p>
@@ -72,7 +72,7 @@ const ArticleDetail = () => {
       authorBio: "Constitutional Law Expert with 12+ years experience",
       date: "2024-01-10",
       readTime: "6 min read",
-      image: "[Image: Constitution with balance scales]",
+      image: "/article-constitution.png",
       content: `
         <h2>Introduction</h2>
         <p>The Indian Constitution contains both Fundamental Rights and Directive Principles of State Policy, each serving different purposes in governance.</p>
@@ -114,7 +114,7 @@ const ArticleDetail = () => {
       authorBio: "High Court Advocate specializing in Writ Petitions",
       date: "2024-01-05",
       readTime: "10 min read",
-      image: "[Image: High Court building with legal documents]",
+      image: "/article-court-gavel.jpeg",
       content: `
         <h2>Introduction to Writ Jurisdiction</h2>
         <p>Article 226 of the Indian Constitution empowers High Courts to issue writs for enforcement of fundamental rights and other legal rights.</p>
@@ -152,7 +152,7 @@ const ArticleDetail = () => {
       authorBio: "Constitutional Law Expert specializing in Privacy Rights",
       date: "2024-01-01",
       readTime: "12 min read",
-      image: "[Image: Privacy shield with digital elements]",
+      image: "/article-constitution.png",
       content: `
         <h2>Right to Privacy as Fundamental Right</h2>
         <p>The Supreme Court in K.S. Puttaswamy v. Union of India (2017) declared privacy as a fundamental right under Article 21.</p>

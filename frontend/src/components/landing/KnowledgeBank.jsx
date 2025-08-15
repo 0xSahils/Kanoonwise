@@ -13,7 +13,7 @@ const KnowledgeBank = () => {
       category: "Constitutional Law",
       author: "Adv. Priya Sharma",
       readTime: "8 min read",
-      image: "[Image: Indian Constitution]",
+      image: "/article-constitution.png",
       featured: true,
     },
     {
@@ -24,7 +24,7 @@ const KnowledgeBank = () => {
       category: "Property Law",
       author: "Adv. Rajesh Kumar",
       readTime: "12 min read",
-      image: "[Image: Property documents]",
+      image: "/article-property.png",
       featured: true,
     },
     {
@@ -35,7 +35,7 @@ const KnowledgeBank = () => {
       category: "Criminal Law",
       author: "Adv. Meera Patel",
       readTime: "10 min read",
-      image: "[Image: Court gavel]",
+      image: "/article-court-gavel.jpeg",
       featured: false,
     },
   ];
@@ -135,11 +135,12 @@ const KnowledgeBank = () => {
                 className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group border border-gray-200 hover:border-yellow-300"
               >
                 {/* Article Image */}
-                <div className="h-48 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                  <div className="text-center text-primary-600">
-                    <i className="fas fa-newspaper text-4xl mb-2"></i>
-                    <p className="text-sm">{article.image}</p>
-                  </div>
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
 
                 {/* Article Content */}

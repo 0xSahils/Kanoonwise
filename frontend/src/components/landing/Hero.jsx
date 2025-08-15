@@ -64,30 +64,6 @@ const Hero = () => {
     { number: "4.8/5", label: "Client Rating" },
   ];
 
-  const floatingCards = [
-    {
-      icon: "fas fa-user-tie",
-      title: "Expert Lawyers",
-      subtitle: "Available 24/7",
-      position: "top-20 left-10",
-      delay: "0s",
-    },
-    {
-      icon: "fas fa-shield-check",
-      title: "Secure & Confidential",
-      subtitle: "100% Privacy",
-      position: "top-32 right-16",
-      delay: "0.5s",
-    },
-    {
-      icon: "fas fa-clock",
-      title: "Quick Response",
-      subtitle: "Within 30 mins",
-      position: "bottom-32 left-16",
-      delay: "1s",
-    },
-  ];
-
   return (
     <section className="relative bg-white pt-20 lg:pt-24 pb-16 overflow-hidden">
       {/* Background Elements */}
@@ -208,8 +184,8 @@ const Hero = () => {
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                 <div className="relative">
                   <img
-                    src="frontend\public\Indian_adv_courtroom.jpeg"
-                    alt="Professional Lawyer"
+                    src="/hero-advocates.jpeg"
+                    alt="Professional Indian Advocates in Courtroom"
                     className="w-64 h-80 object-cover rounded-2xl shadow-2xl"
                   />
                   <div className="absolute -bottom-4 -right-4 bg-white rounded-xl p-3 shadow-lg">
