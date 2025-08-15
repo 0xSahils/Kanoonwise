@@ -123,18 +123,20 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="container-custom py-16">
-        <div className="grid lg:grid-cols-5 gap-8">
+      <div className="container-custom py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Company Info */}
-          <div className="lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <div className="mb-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-primary-600 to-accent-600 rounded-lg">
                   <i className="fas fa-balance-scale text-white text-lg"></i>
                 </div>
-                <span className="text-2xl font-bold">Kanoonwise</span>
+                <span className="text-xl sm:text-2xl font-bold">
+                  Kanoonwise
+                </span>
               </div>
-              <p className="text-gray-400 leading-relaxed mb-6">
+              <p className="text-gray-400 leading-relaxed mb-6 text-sm sm:text-base">
                 India's premier legal services platform connecting you with
                 expert lawyers and comprehensive legal solutions for all your
                 needs.
@@ -144,20 +146,20 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-3 mb-6">
               <div className="flex items-center space-x-3">
-                <i className="fas fa-phone text-yellow-500 w-5"></i>
-                <span className="text-gray-300 hover:text-yellow-400 transition-colors">
+                <i className="fas fa-phone text-yellow-500 w-4 sm:w-5 flex-shrink-0"></i>
+                <span className="text-gray-300 hover:text-yellow-400 transition-colors text-sm sm:text-base">
                   +91 7985179107
                 </span>
               </div>
               <div className="flex items-center space-x-3">
-                <i className="fas fa-envelope text-yellow-500 w-5"></i>
-                <span className="text-gray-300 hover:text-yellow-400 transition-colors">
+                <i className="fas fa-envelope text-yellow-500 w-4 sm:w-5 flex-shrink-0"></i>
+                <span className="text-gray-300 hover:text-yellow-400 transition-colors text-sm sm:text-base">
                   info@Kanoonwise.com
                 </span>
               </div>
               <div className="flex items-start space-x-3">
-                <i className="fas fa-map-marker-alt text-yellow-500 w-5 mt-1"></i>
-                <span className="text-gray-300">
+                <i className="fas fa-map-marker-alt text-yellow-500 w-4 sm:w-5 mt-1 flex-shrink-0"></i>
+                <span className="text-gray-300 text-sm sm:text-base">
                   123 Legal Street, Business District,
                   <br />
                   Mumbai, Maharashtra 400001
@@ -166,7 +168,7 @@ const Footer = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 sm:space-x-4">
               {socialLinks.map((social, index) => (
                 <button
                   key={index}
@@ -182,16 +184,16 @@ const Footer = () => {
 
           {/* Footer Links */}
           {footerSections.map((section, index) => (
-            <div key={index}>
-              <h4 className="text-lg font-semibold mb-6 text-white">
+            <div key={index} className="sm:col-span-1">
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">
                 {section.title}
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <button
                       onClick={() => handleFooterLinkClick(link.name)}
-                      className="text-gray-400 hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 transform inline-block text-left"
+                      className="text-gray-400 hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 transform inline-block text-left text-sm sm:text-base"
                     >
                       {link.name}
                     </button>
@@ -202,8 +204,49 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Newsletter Signup */}
-        <div className="mt-16 pt-8 border-t border-gray-700">
+        {/* Join as Advocate Banner */}
+        <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-gray-700">
+          <div className="bg-gradient-to-r from-orange-600 to-yellow-600 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-2xl mb-6 sm:mb-8">
+            <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+              <div className="text-center lg:text-left">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4 text-white">
+                  <i className="fas fa-balance-scale mr-2 sm:mr-3"></i>
+                  Are You a Legal Professional?
+                </h3>
+                <p className="text-orange-100 text-base sm:text-lg">
+                  Join India's largest network of advocates and expand your
+                  practice. Connect with clients nationwide and grow your legal
+                  career.
+                </p>
+              </div>
+              <div className="text-center lg:text-right">
+                <button
+                  onClick={() => navigate("/join-as-lawyer")}
+                  className="bg-white text-orange-600 hover:bg-gray-100 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl text-base sm:text-lg inline-flex items-center w-full sm:w-auto justify-center min-h-[44px]"
+                >
+                  <i className="fas fa-balance-scale mr-2 sm:mr-3"></i>
+                  Join as Advocate
+                  <i className="fas fa-arrow-right ml-2 sm:ml-3"></i>
+                </button>
+                <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center lg:justify-end gap-3 sm:gap-6 text-orange-100">
+                  <div className="flex items-center justify-center space-x-2">
+                    <i className="fas fa-check-circle text-green-300"></i>
+                    <span className="text-xs sm:text-sm">
+                      Free Registration
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-center space-x-2">
+                    <i className="fas fa-check-circle text-green-300"></i>
+                    <span className="text-xs sm:text-sm">
+                      Verified Platform
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Newsletter Signup */}
           <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-2xl p-8 lg:p-12 shadow-2xl">
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               <div>

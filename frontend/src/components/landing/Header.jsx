@@ -214,31 +214,6 @@ const Header = () => {
                 </div>
               </div>
             ))}
-
-            <button
-              onClick={() => handleNavigation("/about")}
-              className={`font-medium transition-colors duration-200 ${
-                isHomepage
-                  ? isScrolled
-                    ? "text-gray-700 hover:text-yellow-600"
-                    : "text-white hover:text-yellow-500"
-                  : "text-gray-700 hover:text-yellow-600"
-              }`}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => handleNavigation("/contact")}
-              className={`font-medium transition-colors duration-200 ${
-                isHomepage
-                  ? isScrolled
-                    ? "text-gray-700 hover:text-yellow-600"
-                    : "text-white hover:text-yellow-500"
-                  : "text-gray-700 hover:text-yellow-600"
-              }`}
-            >
-              Contact
-            </button>
           </div>
 
           {/* Action Buttons */}
@@ -367,21 +342,23 @@ const Header = () => {
             isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
           } overflow-hidden`}
         >
-          <div className="py-4 space-y-4 bg-white rounded-lg shadow-lg mt-2 border border-gray-100">
+          <div className="py-4 space-y-4 bg-white rounded-lg shadow-lg mt-2 border border-gray-100 mx-4">
             {navItems.map((item, index) => (
               <div key={index} className="px-4">
-                <div className="flex items-center space-x-2 text-gray-700 font-medium py-2">
-                  <i className={item.icon}></i>
-                  <span>{item.name}</span>
+                <div className="flex items-center space-x-3 text-gray-700 font-medium py-3 border-b border-gray-100">
+                  <i className={`${item.icon} text-yellow-600`}></i>
+                  <span className="text-base">{item.name}</span>
                 </div>
-                <div className="ml-6 space-y-2">
+                <div className="ml-6 space-y-1 mt-2">
                   {item.dropdown.map((dropdownItem, dropIndex) => (
                     <button
                       key={dropIndex}
                       onClick={() => handleDropdownClick(dropdownItem)}
-                      className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 py-1 transition-colors duration-200 w-full text-left"
+                      className="flex items-center space-x-3 text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 py-3 px-2 rounded-lg transition-all duration-200 w-full text-left min-h-[44px]"
                     >
-                      <i className={`${dropdownItem.icon} text-xs`}></i>
+                      <i
+                        className={`${dropdownItem.icon} text-sm text-yellow-500`}
+                      ></i>
                       <span className="text-sm">{dropdownItem.name}</span>
                     </button>
                   ))}
@@ -389,40 +366,27 @@ const Header = () => {
               </div>
             ))}
 
-            <div className="px-4 pt-4 border-t border-gray-100">
-              <div className="space-y-3">
-                <button
-                  onClick={() => handleNavigation("/about")}
-                  className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
-                >
-                  Services
-                </button>
-                <button
-                  onClick={() => handleNavigation("/contact")}
-                  className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
-                >
-                  Contact
-                </button>
-
+            <div className="px-4 pt-4 border-t border-gray-200">
+              <div className="space-y-2">
                 {isAuthenticated ? (
                   <>
                     <button
                       onClick={handleDashboardNavigation}
-                      className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200 flex items-center space-x-2"
+                      className="w-full text-left text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center space-x-3 min-h-[44px]"
                     >
-                      <i className="fas fa-tachometer-alt"></i>
+                      <i className="fas fa-tachometer-alt text-yellow-600"></i>
                       <span>Dashboard</span>
                     </button>
                     <button
                       onClick={() => handleNavigation("/my-appointments")}
-                      className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200 flex items-center space-x-2"
+                      className="w-full text-left text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center space-x-3 min-h-[44px]"
                     >
-                      <i className="fas fa-calendar-alt"></i>
+                      <i className="fas fa-calendar-alt text-yellow-600"></i>
                       <span>My Appointments</span>
                     </button>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left text-red-600 hover:text-red-700 font-medium py-2 transition-colors duration-200 flex items-center space-x-2 border-t border-gray-100 pt-3"
+                      className="w-full text-left text-red-600 hover:text-red-700 hover:bg-red-50 font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center space-x-3 border-t border-gray-100 mt-3 pt-3 min-h-[44px]"
                     >
                       <i className="fas fa-sign-out-alt"></i>
                       <span>Logout</span>
@@ -431,16 +395,24 @@ const Header = () => {
                 ) : (
                   <>
                     <button
+                      onClick={() => handleNavigation("/join-as-lawyer")}
+                      className="w-full text-left text-gray-700 hover:text-orange-600 hover:bg-orange-50 font-medium py-3 px-3 rounded-lg transition-all duration-200 flex items-center space-x-3 min-h-[44px]"
+                    >
+                      <i className="fas fa-balance-scale text-orange-600"></i>
+                      <span>Join as Advocate</span>
+                    </button>
+                    <button
                       onClick={() => handleNavigation("/login")}
-                      className="w-full text-left text-gray-700 hover:text-yellow-600 font-medium py-2 transition-colors duration-200"
+                      className="w-full text-left text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 font-medium py-3 px-3 rounded-lg transition-all duration-200 min-h-[44px]"
                     >
                       Login
                     </button>
                     <button
                       onClick={() => handleNavigation("/quick-booking")}
-                      className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-semibold py-3 transition-all duration-300"
+                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 mt-3 min-h-[44px]"
                     >
-                      Get Started
+                      <i className="fas fa-search mr-2"></i>
+                      Find Advocate
                     </button>
                   </>
                 )}

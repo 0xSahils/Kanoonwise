@@ -200,7 +200,7 @@ const ArticleDetail = () => {
       {/* Article Header */}
       <section className="navbar-spacing-simple pb-8 bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
         <div className="container-custom pt-20">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <button
               onClick={() => navigate("/articles")}
               className="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 mb-6 transition-colors"
@@ -215,28 +215,30 @@ const ArticleDetail = () => {
               Law
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               {article.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-gray-300 mb-8">
-              <div className="flex items-center space-x-2">
-                <div className="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center border border-yellow-500/30">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-4 sm:gap-6 text-gray-300 mb-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center border border-yellow-500/30 flex-shrink-0">
                   <i className="fas fa-user text-yellow-400"></i>
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="font-semibold text-white">
                     {article.author}
                   </div>
-                  <div className="text-sm">{article.authorBio}</div>
+                  <div className="text-sm text-gray-300 line-clamp-2">
+                    {article.authorBio}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center space-x-4 text-sm">
-                <span>
+                <span className="flex items-center">
                   <i className="fas fa-calendar mr-1"></i>
                   {article.date}
                 </span>
-                <span>
+                <span className="flex items-center">
                   <i className="fas fa-clock mr-1"></i>
                   {article.readTime}
                 </span>
@@ -247,14 +249,18 @@ const ArticleDetail = () => {
       </section>
 
       {/* Article Image */}
-      <section className="py-8 bg-gray-800">
+      <section className="py-6 sm:py-8 bg-gray-800">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="h-64 md:h-96 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl flex items-center justify-center border border-yellow-500/30">
-              <div className="text-center text-yellow-400">
-                <i className="fas fa-balance-scale text-6xl mb-4"></i>
-                <p className="text-lg font-semibold">{article.title}</p>
-                <p className="text-sm opacity-75">{article.image}</p>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="h-48 sm:h-64 md:h-80 lg:h-96 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-xl sm:rounded-2xl flex items-center justify-center border border-yellow-500/30">
+              <div className="text-center text-yellow-400 px-4">
+                <i className="fas fa-balance-scale text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4"></i>
+                <p className="text-sm sm:text-base md:text-lg font-semibold line-clamp-2">
+                  {article.title}
+                </p>
+                <p className="text-xs sm:text-sm opacity-75 mt-2">
+                  {article.image}
+                </p>
               </div>
             </div>
           </div>
@@ -262,34 +268,34 @@ const ArticleDetail = () => {
       </section>
 
       {/* Article Content */}
-      <section className="py-8 bg-gray-900">
+      <section className="py-6 sm:py-8 bg-gray-900">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid lg:grid-cols-4 gap-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-4 gap-6 lg:gap-8">
               {/* Main Content */}
               <div className="lg:col-span-3">
-                <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-200">
                   <div
-                    className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900"
+                    className="prose prose-sm sm:prose-base lg:prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900 prose-headings:font-bold prose-h2:text-xl sm:prose-h2:text-2xl prose-h3:text-lg sm:prose-h3:text-xl"
                     dangerouslySetInnerHTML={{ __html: article.content }}
                   />
                 </div>
 
                 {/* Share Section */}
-                <div className="mt-8 bg-white rounded-2xl p-6 shadow-xl border border-gray-200">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">
+                <div className="mt-6 sm:mt-8 bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-200">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
                     Share this article
                   </h3>
-                  <div className="flex space-x-4">
-                    <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                    <button className="flex items-center justify-center sm:justify-start space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base">
                       <i className="fab fa-facebook-f"></i>
                       <span>Facebook</span>
                     </button>
-                    <button className="flex items-center space-x-2 bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors">
+                    <button className="flex items-center justify-center sm:justify-start space-x-2 bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors text-sm sm:text-base">
                       <i className="fab fa-twitter"></i>
                       <span>Twitter</span>
                     </button>
-                    <button className="flex items-center space-x-2 bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors">
+                    <button className="flex items-center justify-center sm:justify-start space-x-2 bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors text-sm sm:text-base">
                       <i className="fab fa-linkedin-in"></i>
                       <span>LinkedIn</span>
                     </button>
@@ -298,47 +304,47 @@ const ArticleDetail = () => {
               </div>
 
               {/* Sidebar */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-24 space-y-6">
+              <div className="lg:col-span-1 order-first lg:order-last">
+                <div className="lg:sticky lg:top-24 space-y-4 sm:space-y-6">
                   {/* Table of Contents */}
-                  <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-200">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
                       Table of Contents
                     </h3>
-                    <nav className="space-y-2 text-sm">
+                    <nav className="space-y-2 text-xs sm:text-sm">
                       <a
                         href="#introduction"
-                        className="block text-gray-600 hover:text-yellow-600 transition-colors"
+                        className="block text-gray-600 hover:text-yellow-600 transition-colors py-1"
                       >
                         Introduction to Article 21
                       </a>
                       <a
                         href="#historical"
-                        className="block text-gray-600 hover:text-yellow-600 transition-colors"
+                        className="block text-gray-600 hover:text-yellow-600 transition-colors py-1"
                       >
                         Historical Context
                       </a>
                       <a
                         href="#components"
-                        className="block text-gray-600 hover:text-yellow-600 transition-colors"
+                        className="block text-gray-600 hover:text-yellow-600 transition-colors py-1"
                       >
                         Key Components
                       </a>
                       <a
                         href="#cases"
-                        className="block text-gray-600 hover:text-yellow-600 transition-colors"
+                        className="block text-gray-600 hover:text-yellow-600 transition-colors py-1"
                       >
                         Landmark Cases
                       </a>
                       <a
                         href="#modern"
-                        className="block text-gray-600 hover:text-yellow-600 transition-colors"
+                        className="block text-gray-600 hover:text-yellow-600 transition-colors py-1"
                       >
                         Modern Applications
                       </a>
                       <a
                         href="#conclusion"
-                        className="block text-gray-600 hover:text-yellow-600 transition-colors"
+                        className="block text-gray-600 hover:text-yellow-600 transition-colors py-1"
                       >
                         Conclusion
                       </a>
@@ -346,18 +352,18 @@ const ArticleDetail = () => {
                   </div>
 
                   {/* Author Info */}
-                  <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-200">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-500/30">
-                        <i className="fas fa-user text-yellow-600 text-xl"></i>
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-yellow-500/30">
+                        <i className="fas fa-user text-yellow-600 text-lg sm:text-xl"></i>
                       </div>
-                      <h4 className="font-bold text-gray-900 mb-2">
+                      <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">
                         {article.author}
                       </h4>
-                      <p className="text-sm text-gray-600 mb-4">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-3">
                         {article.authorBio}
                       </p>
-                      <button className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all text-sm">
+                      <button className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 sm:px-4 py-2 rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all text-xs sm:text-sm w-full sm:w-auto">
                         View Profile
                       </button>
                     </div>
@@ -370,26 +376,26 @@ const ArticleDetail = () => {
       </section>
 
       {/* Related Articles */}
-      <section className="py-16 bg-gray-800">
+      <section className="py-8 sm:py-12 lg:py-16 bg-gray-800">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8">
               Related Articles
             </h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {relatedArticles.map((relatedArticle) => (
                 <div
                   key={relatedArticle.id}
                   onClick={() => navigate(`/articles/${relatedArticle.id}`)}
-                  className="bg-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer p-6 border border-gray-200 hover:border-yellow-300"
+                  className="bg-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer p-4 sm:p-6 border border-gray-200 hover:border-yellow-300 transform hover:-translate-y-1"
                 >
                   <div className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium inline-block mb-3">
                     {relatedArticle.category}
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-2 hover:text-yellow-600 transition-colors">
+                  <h3 className="font-bold text-gray-900 mb-2 hover:text-yellow-600 transition-colors text-sm sm:text-base line-clamp-2">
                     {relatedArticle.title}
                   </h3>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs sm:text-sm text-gray-500">
                     {relatedArticle.readTime}
                   </p>
                 </div>
