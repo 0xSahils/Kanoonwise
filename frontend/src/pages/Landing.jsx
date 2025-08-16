@@ -18,8 +18,8 @@ const Landing = () => {
     <div className="min-h-screen">
       <Header />
       <Hero />
-      <WhyChooseUs />
       <JoinAsAdvocate />
+      <WhyChooseUs />
       <LawyersByCity />
       <Testimonials />
       <CTA />

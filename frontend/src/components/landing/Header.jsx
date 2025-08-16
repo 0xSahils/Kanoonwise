@@ -10,6 +10,7 @@ const Header = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openDropdowns, setOpenDropdowns] = useState({});
 
   // Check if we're on homepage
   const isHomepage = location.pathname === "/";
@@ -22,10 +23,29 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest("nav")) {
+        setIsMenuOpen(false);
+        setOpenDropdowns({});
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   // Navigation handlers
   const handleNavigation = (path) => {
     navigate(path);
     setIsMenuOpen(false);
+    setOpenDropdowns({});
   };
 
   const handleDropdownClick = (item) => {
@@ -55,6 +75,7 @@ const Header = () => {
       navigate(path);
     }
     setIsMenuOpen(false);
+    setOpenDropdowns({});
   };
 
   const handleLogout = () => {
@@ -67,6 +88,14 @@ const Header = () => {
       user?.role === "lawyer" ? "/lawyer/dashboard" : "/client/dashboard";
     navigate(dashboardPath);
     setIsMenuOpen(false);
+    setOpenDropdowns({});
+  };
+
+  const toggleDropdown = (index) => {
+    setOpenDropdowns((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
   const navItems = [
@@ -314,7 +343,12 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => {
+              setIsMenuOpen(!isMenuOpen);
+              if (isMenuOpen) {
+                setOpenDropdowns({});
+              }
+            }}
           >
             <div className="space-y-1">
               <div
@@ -345,11 +379,27 @@ const Header = () => {
           <div className="py-4 space-y-4 bg-white rounded-lg shadow-lg mt-2 border border-gray-100 mx-4">
             {navItems.map((item, index) => (
               <div key={index} className="px-4">
-                <div className="flex items-center space-x-3 text-gray-700 font-medium py-3 border-b border-gray-100">
-                  <i className={`${item.icon} text-yellow-600`}></i>
-                  <span className="text-base">{item.name}</span>
-                </div>
-                <div className="ml-6 space-y-1 mt-2">
+                <button
+                  onClick={() => toggleDropdown(index)}
+                  className="flex items-center justify-between w-full text-gray-700 font-medium py-3 border-b border-gray-100 hover:text-yellow-600 transition-colors duration-200"
+                >
+                  <div className="flex items-center space-x-3">
+                    <i className={`${item.icon} text-yellow-600`}></i>
+                    <span className="text-base">{item.name}</span>
+                  </div>
+                  <i
+                    className={`fas fa-chevron-down text-sm transition-transform duration-200 ${
+                      openDropdowns[index] ? "rotate-180" : ""
+                    }`}
+                  ></i>
+                </button>
+                <div
+                  className={`ml-6 space-y-1 mt-2 overflow-hidden transition-all duration-300 ${
+                    openDropdowns[index]
+                      ? "max-h-96 opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
                   {item.dropdown.map((dropdownItem, dropIndex) => (
                     <button
                       key={dropIndex}

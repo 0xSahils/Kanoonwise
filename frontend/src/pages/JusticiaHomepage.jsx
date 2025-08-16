@@ -680,7 +680,42 @@ const JusticiaHomepage = () => {
       <KnowledgeBank />
 
       {/* Contact Section */}
-      <section className="py-20 bg-gray-900 text-white">
+      <section className="py-20 bg-gray-900 text-white px-20">
+        <div className="bg-gradient-to-r from-orange-600 to-yellow-600 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 shadow-2xl mb-6 sm:mb-8">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+            <div className="text-center lg:text-left">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4 text-white">
+                <i className="fas fa-balance-scale mr-2 sm:mr-3"></i>
+                Are You a Legal Professional?
+              </h3>
+              <p className="text-orange-100 text-base sm:text-lg">
+                Join India's largest network of advocates and expand your
+                practice. Connect with clients nationwide and grow your legal
+                career.
+              </p>
+            </div>
+            <div className="text-center lg:text-right">
+              <button
+                onClick={() => navigate("/join-as-lawyer")}
+                className="bg-white text-orange-600 hover:bg-gray-100 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl text-base sm:text-lg inline-flex items-center w-full sm:w-auto justify-center min-h-[44px]"
+              >
+                <i className="fas fa-balance-scale mr-2 sm:mr-3"></i>
+                Join as Advocate
+                <i className="fas fa-arrow-right ml-2 sm:ml-3"></i>
+              </button>
+              <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center lg:justify-end gap-3 sm:gap-6 text-orange-100">
+                <div className="flex items-center justify-center space-x-2">
+                  <i className="fas fa-check-circle text-green-300"></i>
+                  <span className="text-xs sm:text-sm">Free Registration</span>
+                </div>
+                <div className="flex items-center justify-center space-x-2">
+                  <i className="fas fa-check-circle text-green-300"></i>
+                  <span className="text-xs sm:text-sm">Verified Platform</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-block w-12 h-1 bg-yellow-500 mb-4"></div>
